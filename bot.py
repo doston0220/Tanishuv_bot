@@ -1,4 +1,3 @@
-
 import logging
 from telegram import Update, Message
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
@@ -32,7 +31,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     partner_id = matchmaker.get_partner(user_id)
     if partner_id:
         try:
-            await context.bot.copy_message(chat_id=partner_id, from_chat_id=update.message.chat_id, message_id=update.message.message_id)
+            await context.bot.copy_message(
+                chat_id=partner_id,
+                from_chat_id=update.message.chat_id,
+                message_id=update.message.message_id
+            )
         except Exception as e:
             await update.message.reply_text("Xabar yuborib bo‘lmadi.")
     await forward_to_admin(update.message)
@@ -48,6 +51,8 @@ app.add_handler(CommandHandler("search", search))
 app.add_handler(CommandHandler("stop", stop))
 app.add_handler(MessageHandler(filters.TEXT | filters.VOICE | filters.PHOTO | filters.VIDEO, handle_message))
 
-if __name__ == "__main__":
+# 🟢 TO‘G‘RI BU SHU QATOR:
+if name == "main":
     print("🤖 Bot ishga tushdi...")
     app.run_polling()
+    
